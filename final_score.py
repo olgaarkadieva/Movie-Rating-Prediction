@@ -4,11 +4,14 @@ import csv
 from nltk.corpus import stopwords
 import string
 import nltk
+nltk.download("stopwords")
+from nltk.corpus import stopwords
+stop = set(stopwords.words('english'))
 
 def word_feats(words):
 	return dict([(word, True) for word in words])
 
-stop = stopwords.words('english')
+# stop = stopwords.words('english')
 f = open('my_classifier.pickle', 'rb')
 classifier = pickle.load(f)
 f.close()
@@ -41,6 +44,7 @@ def score(movie_name, row):
 		result[movie_name]= b-a
 	return result[movie_name]
 
-#result = score("Good Kill", "Primarily this film is a debate about the ethics of drone warfare and the \"War on Terror.\" The supporting characters are representatives of political positions, their metonymic function is to parrot the arguments for and against bombing sovereign nations, collateral damage Guru,10, Mani Ratnam does it again ... outstanding!! With his vivid dramatization of the Indian business situation of the 1950s-1980s (pre-liberalization period), through the story of an ordinary entrepreneur, he surely aims at igniting the educated Indian minds towards entrepreneurship. Yes! The movie is not for everyone, but a focused audience")
+result = score("Good Kill", "Primarily this film is a debate about the ethics of drone warfare and the \"War on Terror.\" The supporting characters are representatives of political positions, their metonymic function is to parrot the arguments for and against bombing sovereign nations, collateral damage Guru,10, Mani Ratnam does it again ... outstanding!! With his vivid dramatization of the Indian business situation of the 1950s-1980s (pre-liberalization period), through the story of an ordinary entrepreneur, he surely aims at igniting the educated Indian minds towards entrepreneurship. Yes! The movie is not for everyone, but a focused audience")
 
-#print result
+# print("Result of search ")
+# print(result)

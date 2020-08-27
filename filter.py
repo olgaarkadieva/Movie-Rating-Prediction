@@ -4,7 +4,8 @@ import looper
 from operator import add
 import os
 import sys
-execfile("final_score.py")
+exec(open("./final_score.py").read())
+
 
 #setClassPath()
 
@@ -13,12 +14,12 @@ sc = SparkContext(appName="Rating")
 
 #no idea how to run with pyspark
 #list of movie names
-movieList = sc.textFile("movielist.txt")
+movieList = sc.textFile("movie_title.csv")
 #convert to a broadcast variable
 broadMovies = sc.broadcast(movieList.collect())
 #comments from movie subreddits
 comments = sc.textFile("comments.csv")
-#score.init()
+# score.init()
 #<comment, entire row>
 keyComments = comments.map(lambda part : (re.findall('"([^"]*)"',part),part)).filter(lambda x : len(x[0])>0).map(lambda y : (y[0][0],y[1]))
 
@@ -40,5 +41,5 @@ maxScore = nlpMovies.map(lambda x: x[1]).max()
 #We have considered only the good movies in movie history. Adding a correction factor of 4.
 normalizedScores = nlpMovies.map(lambda x: (x[0], 4 + (x[1] - minScore)*5.0/(maxScore - minScore)))
 
-print normalizedScores.collectAsMap()
+print(normalizedScores.collectAsMap())
 
